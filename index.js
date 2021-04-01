@@ -31,6 +31,14 @@ app.get("/", (req, res) => {
     
 })
 
+app.get("/ping", (req, res) => {
+
+
+    console.log("hi dear")
+    res.send("hi dear")
+    
+})
+
 
 //check if there is an environment port
 const PORT = process.env.PORT || 5000
