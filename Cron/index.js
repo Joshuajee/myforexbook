@@ -56,7 +56,9 @@ cron.schedule('0 * * * *', () => {
 
               }
 
-          })
+          }).catch((error) => {
+            console.log("errr" + error)
+        })
           
       }
  
