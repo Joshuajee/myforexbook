@@ -21,7 +21,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.get("/", (req, res) => {
 
-    symbols.findOne((data)=>{
+    symbols.find((err, data)=>{
+
+        console.log(data)
 
         res.send(data)
 
