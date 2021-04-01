@@ -16,7 +16,7 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 
-cron.schedule('0 * * * * *', () => {
+cron.schedule('0 * * * *', () => {
 
   console.log("cron activated")
 
