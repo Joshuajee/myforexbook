@@ -19,16 +19,37 @@ const db = mongoose.connection
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
+
+
 app.get("/", (req, res) => {
 
-    symbols.find((err, data)=>{
+    symbols.distinct("name", (err, symbol)=>{
+
+        console.log(symbol)
+
+        symbols.find((err, data)=>{
+
+            console.log(data)
+   
+            res.send([symbol, data])
+    
+        })
+
+    })
+    
+    
+})
+
+app.get("/symbol", (req, res) => {
+
+    symbols.find({name:"EURUSD"}, (err, data)=>{
 
         console.log(data)
 
         res.send(data)
 
     })
-    
+
 })
 
 app.get("/ping", (req, res) => {
@@ -41,6 +62,6 @@ app.get("/ping", (req, res) => {
 
 
 //check if there is an environment port
-const PORT = process.env.PORT || 6000
+const PORT = process.env.PORT || 5100
 
 app.listen(PORT)

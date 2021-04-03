@@ -6,6 +6,7 @@ const symbols = require("../Model/Symbols")
 
 
 
+
 //set up default mongoose connection
 mongoose.connect(config.DataBaseURI, {useNewUrlParser:true, useUnifiedTopology:true})
 
@@ -49,6 +50,8 @@ cron.schedule('0 * * * *', () => {
                       symbolsObj.totalPositions = element.totalPositions
                       symbolsObj.avgShortPrice = element.avgShortPrice
                       symbolsObj.avgLongPrice = element.avgLongPrice
+                      symbolsObj.date = new Date()
+                      symbolsObj.timeStamp = Date.now()
 
                       symbolsObj.save()
 

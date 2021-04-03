@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-let date = new Date()
+
 
 const Symbols = new mongoose.Schema({
     name : {type:String, default : ""},
@@ -13,7 +13,7 @@ const Symbols = new mongoose.Schema({
     totalPositions : {type:Number, default : 0}, 
     avgShortPrice : {type:Number, default : 0}, 
     avgLongPrice : {type:Number, default : 0},
-    date : {type:Date, default : date},
+    date : {type:Date, default : new Date()},
     timeStamp: {type:Number, default : Date.now()}
 })
 
