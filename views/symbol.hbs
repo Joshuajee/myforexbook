@@ -1,0 +1,26 @@
+<table>
+
+    <thead> 
+
+        <th>Name</th> <th>Short Percentage</th> <th>Long Percentage</th> <th>Short Volume</th> 
+        <th>Long Volume</th> <th>Total Position</th> <th>Average Short Price</th> <th>Average Long Price</th>
+        <th>Date</th>
+
+    </thead>
+
+    <tbody> 
+
+    {{#each data}}
+
+        <tr>
+            <td> {{name}} </td> <td> {{shortPercentage}}% </td> <td>{{longPercentage}}% </td> 
+            <td> {{shortVolume}} lots </td> <td> {{longVolume}} lots </td> <td> {{totalPositions}} </td>
+            <td> {{avgShortPrice}} </td>  <td> {{avgLongPrice}} </td> <td> {{date}} </td>
+        </tr>
+
+    {{/each}}
+    
+    </tbody>
+
+</table>
+
