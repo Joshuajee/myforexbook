@@ -1,5 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const path = require('path')
+var exphbs  = require('express-handlebars');
+
 const config = require("./Config/config")
 const symbols = require("./Model/Symbols")
 
@@ -19,7 +22,9 @@ const db = mongoose.connection
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
-
+// view engine setup
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
 
 app.get("/", (req, res) => {
 
@@ -27,22 +32,21 @@ app.get("/", (req, res) => {
 
         console.log(symbol)
 
-        symbols.find((err, data)=>{
-
-            console.log(data)
-   
-            res.send([symbol, data])
+        res.render('home', {symbol});
+       
     
-        })
-
     })
     
     
 })
 
-app.get("/symbol", (req, res) => {
+app.get('/home', function (req, res) {
+    res.render('home');
+});
 
-    symbols.find({name:"EURUSD"}, (err, data)=>{
+app.get("/symbol/:symbol", (req, res) => {
+
+    symbols.find({name:req.params.symbol}, (err, data)=>{
 
         console.log(data)
 
