@@ -1,8 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const path = require('path')
-var exphbs  = require('express-handlebars')
-require("handlebars");
+const exphbs  = require('express-handlebars')({extname:"hbs"})
+
 
 const config = require("./Config/config")
 const symbols = require("./Model/Symbols")
@@ -24,8 +23,10 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 // view engine setup
-app.engine('hbs', exphbs({extname:"hbs"}));
+app.engine('hbs', exphbs);
 app.set('view engine', 'hbs');
+
+
 
 app.get("/", (req, res) => {
 
