@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const exphbs  = require('express-handlebars')({extname:"hbs"})
+//const exphbs  = require('express-handlebars')({extname:"hbs"})
 
 
 const config = require("./Config/config")
@@ -21,11 +21,11 @@ const db = mongoose.connection
 
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
-
+/*
 // view engine setup
 app.engine('hbs', exphbs);
 app.set('view engine', 'hbs');
-
+*/
 
 
 app.get("/", (req, res) => {
@@ -34,7 +34,8 @@ app.get("/", (req, res) => {
 
         console.log(symbol)
 
-        res.render('home', {symbol});
+        //res.render('home', {symbol});
+        res.send(symbols)
     
     })
     
@@ -55,8 +56,8 @@ app.get("/symbol/:symbol/:start", (req, res) => {
 
         console.log(data)
 
-        res.render('symbol', {data, caption, start, end});
-
+        //res.render('symbol', {data, caption, start, end});
+        res.send("working")
         console.log(start)
 
     }).lean().skip(start).limit(15)
