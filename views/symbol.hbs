@@ -1,10 +1,15 @@
-<table cellpadding="5" cellspacing="5" class="table centered striped responsive-table" >
+<center><a href="/"> Home </a></center>
+
+<table cellpadding="5" cellspacing="5" class="table striped responsive-table" >
+
+    <caption> <h3> <b>{{caption}} </b> </h3></caption>
+
+    <caption> Showing from {{start}} to {{end}}</caption>
 
     <thead> 
 
-        <th>Name</th> <th>Short Percentage</th> <th>Long Percentage</th> <th>Short Volume</th> 
-        <th>Long Volume</th> <th>Total Position</th> <th>Average Short Price</th> <th>Average Long Price</th>
-        <th>Date</th>
+        <th>Short Percentage</th> <th>Long Percentage</th> <th>Short Volume</th> <th>Long Volume</th> 
+        <th>Total Position</th> <th>Average Short Price</th> <th>Average Long Price</th>
 
     </thead>
 
@@ -13,14 +18,29 @@
     {{#each data}}
 
         <tr>
-            <td> {{name}} </td> <td> {{shortPercentage}}% </td> <td>{{longPercentage}}% </td> 
+            <td> {{shortPercentage}}% </td> <td>{{longPercentage}}% </td> 
             <td> {{shortVolume}} lots </td> <td> {{longVolume}} lots </td> <td> {{totalPositions}} </td>
-            <td> {{avgShortPrice}} </td>  <td> {{avgLongPrice}} </td> <td> {{date}} </td>
+            <td> {{avgShortPrice}} </td>  <td> {{avgLongPrice}} </td>
         </tr>
 
     {{/each}}
 
     </tbody>
 
+ 
 </table>
+
+<center>
+
+    <ul class="pagination">
+        <li class="disabled"><a href="/symbol/{{caption}}/1"><i class="material-icons">chevron_left</i></a></li>
+        <li class="waves-effect active"><a href="/symbol/{{caption}}/1">1</a></li>
+        <li class="waves-effect"><a href="/symbol/{{caption}}/2">2</a></li>
+        <li class="waves-effect"><a href="/symbol/{{caption}}/3">3</a></li>
+        <li class="waves-effect"><a href="/symbol/{{caption}}/4">4</a></li>
+        <li class="waves-effect"><a href="/symbol/{{caption}}/5">5</a></li>
+        <li class="waves-effect"><a href="/symbol/{{caption}}/6"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
+
+</center>
 

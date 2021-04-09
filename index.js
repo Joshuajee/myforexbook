@@ -35,7 +35,6 @@ app.get("/", (req, res) => {
         console.log(symbol)
 
         res.render('home', {symbol});
-       
     
     })
     
@@ -46,15 +45,23 @@ app.get('/home', function (req, res) {
     res.render('home');
 });
 
-app.get("/symbol/:symbol", (req, res) => {
+app.get("/symbol/:symbol/:start", (req, res) => {
 
-    symbols.find({name:req.params.symbol}, (err, data)=>{
+    let caption = req.params.symbol
+    let start = 1 + (parseInt(req.params.start) - 1) * 20 
+    let end = start + 20 - 1
+    
+    symbols.find({name:caption}, (err, data) => {
 
         console.log(data)
 
-        res.render('symbol', {data});
+        res.render('symbol', {data, caption, start, end});
 
-    }).lean()
+        console.log(start)
+
+    }).lean().skip(start).limit(15)
+
+    
 
 })
 
