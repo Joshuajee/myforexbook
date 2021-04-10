@@ -17,11 +17,12 @@
 
     {{#each data}}
 
-        <tr class="tooltip">
-            <td> {{index}} </td> <td> {{shortPercentage}}% </td> <td>{{longPercentage}}% </td> 
+        <tr class="tooltipped" data-position="left" data-tooltip="{{date}}">
+
+            <td> {{index}}</td> <td> {{shortPercentage}}% </td> <td>{{longPercentage}}% </td> 
             <td> {{shortVolume}} lots </td> <td> {{longVolume}} lots </td> <td> {{totalPositions}} </td>
             <td> {{avgShortPrice}} </td>  <td> {{avgLongPrice}} </td>
-            <td> <span class="tooltiptext">{{date}}</span> </td>
+            
         </tr>
 
     {{/each}}
@@ -33,21 +34,28 @@
 <center>
 
     <ul class="pagination">
-
-        <li class="disabled"><a href="/symbol/{{caption}}/1"><i class="material-icons">chevron_left</i></a></li>
+    
+    {{#if notFirstPage}}
+        <li><a href="/symbol/{{caption}}/1"><i class="material-icons">chevron_left</i></a></li>
+    {{/if}}
 
     {{#each pages}}
 
-        {{#if this}}
-            <li class="waves-effect active"><a href="/symbol/{{caption}}/{{this}}">{{this}}</a></li>
+        {{#if this.[2]}}
+
+            <li class="waves-effect active"><a href=/symbol/{{this.[1]}}/{{this.[0]}}>{{this.[0]}}</a></li>
+
         {{else}}
-            <li class="waves-effect"><a href="/symbol/{{caption}}/{{this}}">{{this}}</a></li>
+
+            <li class="waves-effect"><a href=/symbol/{{this.[1]}}/{{this.[0]}}>{{this.[0]}}</a></li>
+
         {{/if}}
         
     {{/each}}
-
-        <li class="waves-effect"><a href="/symbol/{{caption}}/6"><i class="material-icons">chevron_right</i></a></li>
     
+    {{#if notLastPage}}
+        <li class="waves-effect"><a href=/symbol/{{caption}}/{{next}}><i class="material-icons">chevron_right</i></a></li>
+    {{/if}}
     </ul>
 
 </center>

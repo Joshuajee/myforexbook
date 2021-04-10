@@ -51,7 +51,10 @@ app.get("/symbol/:symbol/:start", (req, res) => {
     let page = parseInt(req.params.start)
     let dataPerPage = 20
     let start = 1 + (page - 1) * dataPerPage 
-    let end = start + dataPerPage - 1
+    let next = page + 1
+    let notFirstPage = page !== 1
+    
+
  
     symbols.find({name:caption}, (err, data) => {
 
@@ -63,24 +66,41 @@ app.get("/symbol/:symbol/:start", (req, res) => {
 
             console.log(data)
 
-            for(let i = 0; i < data.length; i++) data[i].index = start + i
+            let dataLength = -1
 
-            for(let i = 0; i < numberOfPages; i++) pages.push(i + 1)
+            for(let i = 0; i < data.length; i++){
+
+                data[i].index = start + i
+                dataLength++
+
+            }
+
+            for(let i = 0; i < numberOfPages; i++){
+
+                if(page === i + 1)
+                    pages.push([i + 1, caption, true])
+                else
+                    pages.push([i + 1, caption, false])
+
+            }
+
+            let end = start + dataLength
+            let notLastPage = page !== numberOfPages
     
-            res.render('symbol', {data, caption, start, end, pages, page});
+            res.render('symbol', {data, caption, start, end, pages, next, notFirstPage, notLastPage});
     
             console.log("Start : ", start)
             console.log("Count : ", count)
             console.log("Number Of Pages : ", numberOfPages)
+            console.log(notFirstPage)
     
         })
 
 
-    }).lean().skip(start).limit(dataPerPage).sort({timeStamp:-1})
-
-    
+    }).lean().skip(start - 1).limit(dataPerPage).sort("-timeStamp")
 
 })
+
 
 app.get("/ping", (req, res) => {
 
