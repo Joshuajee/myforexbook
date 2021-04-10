@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-//const exphbs  = require('express-handlebars')({extname:"hbs"})
+const exphbs  = require('express-handlebars')({extname:"hbs"})
 
 
 const config = require("./Config/config")
@@ -21,11 +21,11 @@ const db = mongoose.connection
 
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
-/*
+
 // view engine setup
 app.engine('hbs', exphbs);
 app.set('view engine', 'hbs');
-*/
+
 
 
 app.get("/", (req, res) => {
@@ -34,8 +34,7 @@ app.get("/", (req, res) => {
 
         console.log(symbol)
 
-        //res.render('home', {symbol});
-        res.send(symbols)
+        res.render('home', {symbol});
     
     })
     
@@ -49,18 +48,35 @@ app.get('/home', function (req, res) {
 app.get("/symbol/:symbol/:start", (req, res) => {
 
     let caption = req.params.symbol
-    let start = 1 + (parseInt(req.params.start) - 1) * 20 
-    let end = start + 20 - 1
-    
+    let page = parseInt(req.params.start)
+    let dataPerPage = 20
+    let start = 1 + (page - 1) * dataPerPage 
+    let end = start + dataPerPage - 1
+ 
     symbols.find({name:caption}, (err, data) => {
 
-        console.log(data)
+        symbols.count({name:caption}, (err, count) => {
 
-        //res.render('symbol', {data, caption, start, end});
-        res.send("working")
-        console.log(start)
+            let numberOfPages = Math.ceil(count / dataPerPage)
 
-    }).lean().skip(start).limit(15)
+            let pages = []
+
+            console.log(data)
+
+            for(let i = 0; i < data.length; i++) data[i].index = start + i
+
+            for(let i = 0; i < numberOfPages; i++) pages.push(i + 1)
+    
+            res.render('symbol', {data, caption, start, end, pages, page});
+    
+            console.log("Start : ", start)
+            console.log("Count : ", count)
+            console.log("Number Of Pages : ", numberOfPages)
+    
+        })
+
+
+    }).lean().skip(start).limit(dataPerPage).sort({timeStamp:-1})
 
     
 

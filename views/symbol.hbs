@@ -1,6 +1,6 @@
 <center><a href="/"> Home </a></center>
 
-<table cellpadding="5" cellspacing="5" class="table striped responsive-table" >
+<table cellpadding="5" cellspacing="5" class="table centered striped responsive-table" >
 
     <caption> <h3> <b>{{caption}} </b> </h3></caption>
 
@@ -8,7 +8,7 @@
 
     <thead> 
 
-        <th>Short Percentage</th> <th>Long Percentage</th> <th>Short Volume</th> <th>Long Volume</th> 
+        <th>S/N</th> <th>Short Percentage</th> <th>Long Percentage</th> <th>Short Volume</th> <th>Long Volume</th> 
         <th>Total Position</th> <th>Average Short Price</th> <th>Average Long Price</th>
 
     </thead>
@@ -17,30 +17,39 @@
 
     {{#each data}}
 
-        <tr>
-            <td> {{shortPercentage}}% </td> <td>{{longPercentage}}% </td> 
+        <tr class="tooltip">
+            <td> {{index}} </td> <td> {{shortPercentage}}% </td> <td>{{longPercentage}}% </td> 
             <td> {{shortVolume}} lots </td> <td> {{longVolume}} lots </td> <td> {{totalPositions}} </td>
             <td> {{avgShortPrice}} </td>  <td> {{avgLongPrice}} </td>
+            <td> <span class="tooltiptext">{{date}}</span> </td>
         </tr>
 
     {{/each}}
 
     </tbody>
 
- 
 </table>
 
 <center>
 
     <ul class="pagination">
+
         <li class="disabled"><a href="/symbol/{{caption}}/1"><i class="material-icons">chevron_left</i></a></li>
-        <li class="waves-effect active"><a href="/symbol/{{caption}}/1">1</a></li>
-        <li class="waves-effect"><a href="/symbol/{{caption}}/2">2</a></li>
-        <li class="waves-effect"><a href="/symbol/{{caption}}/3">3</a></li>
-        <li class="waves-effect"><a href="/symbol/{{caption}}/4">4</a></li>
-        <li class="waves-effect"><a href="/symbol/{{caption}}/5">5</a></li>
+
+    {{#each pages}}
+
+        {{#if this}}
+            <li class="waves-effect active"><a href="/symbol/{{caption}}/{{this}}">{{this}}</a></li>
+        {{else}}
+            <li class="waves-effect"><a href="/symbol/{{caption}}/{{this}}">{{this}}</a></li>
+        {{/if}}
+        
+    {{/each}}
+
         <li class="waves-effect"><a href="/symbol/{{caption}}/6"><i class="material-icons">chevron_right</i></a></li>
+    
     </ul>
 
 </center>
+
 
