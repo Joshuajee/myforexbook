@@ -1,72 +1,56 @@
-const mongoose = require('mongoose')
-const config = require("../Config/config")
 const axios = require('axios')
 const cron = require('node-cron')
-const symbols = require("../Model/Symbols")
+const Symbol = require("../model/symbols")
 
 
 
+cron.schedule("0 * * * *", async () => {
 
-//set up default mongoose connection
-mongoose.connect(config.DataBaseURI, {useNewUrlParser:true, useUnifiedTopology:true})
+  try {
 
-//Get the connection
-const db = mongoose.connection
+    console.log("cron activated")
 
-//Bind connection to error event (to get notification of connection errors)
-db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+    const loginUrl = `https://www.myfxbook.com/api/login.json?email=${process.env.EMAIL}&password=${process.env.PASSWORD}`;
 
+    const myfxbookResponse = await axios.get(loginUrl);
 
-cron.schedule('0 * * * *', () => {
+    if(myfxbookResponse.data.error) return;
 
-  console.log("cron activated")
+    const dataUrl = "https://www.myfxbook.com/api/get-community-outlook.json?session=" + myfxbookResponse.data.session
+    
+    const data = await axios.get(dataUrl);
 
-  let loginUrl = "https://www.myfxbook.com/api/login.json?email=" + config.Email + "&password=" + config.Password
+    if(data.data.error) return;
 
-    axios.get(loginUrl).
-    then(response =>{
+    const promises = data.data.symbols.map(async element => {
 
-        if(!response.data.error){
+      const symbolsObj = new Symbol();
 
-            let dataUrl = "https://www.myfxbook.com/api/get-community-outlook.json?session=" + response.data.session
+      symbolsObj.name = element.name
+      symbolsObj.shortPercentage = element.shortPercentage
+      symbolsObj.longPercentage = element.longPercentage
+      symbolsObj.shortVolume = element.shortVolume
+      symbolsObj.longVolume = element.longVolume
+      symbolsObj.longPositions = element.longPositions
+      symbolsObj.shortPositions = element.shortPositions
+      symbolsObj.totalPositions = element.totalPositions
+      symbolsObj.avgShortPrice = element.avgShortPrice
+      symbolsObj.avgLongPrice = element.avgLongPrice
+      symbolsObj.date = new Date()
+      symbolsObj.timeStamp = Date.now()
 
-            axios.get(dataUrl).then(data => {
+      return await symbolsObj.save()
+    });
 
-              if(!data.data.error){
+    await Promise.allSettled(promises)
+    
+    console.log("Done With No Issue")
 
-                  data.data.symbols.forEach(element => {
+  } catch (err) {
 
-                      console.log(element)
+    console.error(err);
 
-                      let symbolsObj = new symbols()
+  }
 
-                      symbolsObj.name = element.name
-                      symbolsObj.shortPercentage = element.shortPercentage
-                      symbolsObj.longPercentage = element.longPercentage
-                      symbolsObj.shortVolume = element.shortVolume
-                      symbolsObj.longVolume = element.longVolume
-                      symbolsObj.longPositions = element.longPositions
-                      symbolsObj.shortPositions = element.shortPositions
-                      symbolsObj.totalPositions = element.totalPositions
-                      symbolsObj.avgShortPrice = element.avgShortPrice
-                      symbolsObj.avgLongPrice = element.avgLongPrice
-                      symbolsObj.date = new Date()
-                      symbolsObj.timeStamp = Date.now()
-
-                      symbolsObj.save()
-
-                  });
-
-              }
-
-          }).catch((error) => {
-            console.log("errr" + error)
-        })
-          
-      }
- 
-    }).catch((error) => {
-        console.log("errr" + error)
-    })
 
 })
