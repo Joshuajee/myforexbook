@@ -2,9 +2,9 @@
 
 <table cellpadding="5" cellspacing="5" class="table centered striped responsive-table" >
 
-    <caption> <h3> <b>{{caption}} </b> </h3></caption>
+    <symbol> <h3> <b>{{symbol}} </b> </h3></symbol>
 
-    <caption> Showing from {{start}} to {{end}}</caption>
+    <symbol> Showing from {{start}} to {{end}}</symbol>
 
     <thead> 
 
@@ -35,8 +35,8 @@
 
     <ul class="pagination">
     
-    {{#if notFirstPage}}
-        <li><a href="/symbol/{{caption}}/1"><i class="material-icons">chevron_left</i></a></li>
+    {{!-- {{#if notFirstPage}}
+        <li><a href="/symbol/{{symbol}}/1"><i class="material-icons">chevron_left</i></a></li>
     {{/if}}
 
     {{#each pages}}
@@ -54,8 +54,9 @@
     {{/each}}
     
     {{#if notLastPage}}
-        <li class="waves-effect"><a href=/symbol/{{caption}}/{{next}}><i class="material-icons">chevron_right</i></a></li>
-    {{/if}}
+        <li class="waves-effect"><a href=/symbol/{{symbol}}/{{next}}><i class="material-icons">chevron_right</i></a></li>
+    {{/if}} --}}
+
     </ul>
 
 </center>

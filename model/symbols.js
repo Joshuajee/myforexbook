@@ -1,8 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-
-
-const Symbols = new mongoose.Schema({
+const symbolSchema = new mongoose.Schema({
     name : {type:String, default : ""},
     shortPercentage : {type:Number, default : 0},
     longPercentage :{type:Number, default : 0},
@@ -17,4 +15,4 @@ const Symbols = new mongoose.Schema({
     timeStamp: {type:Number, default : Date.now()}
 })
 
-module.exports = mongoose.model("symbols", Symbols)
+module.exports = mongoose.model("Symbol", symbolSchema);
