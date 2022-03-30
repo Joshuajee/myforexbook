@@ -13,18 +13,14 @@ const viewRouter = require('./routes/viewRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
-//update the database hourly
-require("./Cron")
-
 //create an express app
 const app = express();
 
-
 app.enable('trust proxy');
+
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
-app.use(cors());
 
 
 // Set security HTTP headers
@@ -40,6 +36,8 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!'
 });
 
+
+app.use('/api', cors())
 app.use('/api', limiter);
 
 
@@ -81,6 +79,10 @@ app.all('*', (req, res, next) => {
   });
   
 app.use(globalErrorHandler);
+
+
+//update the database hourly
+require("./Cron")
   
 
 module.exports = app;
