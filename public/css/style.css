@@ -23,3 +23,9 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.frame {
+  width: 100%;
+  height: 100%;
+  border: 0px;
+}
