@@ -3,16 +3,13 @@
 This webserver collects hourly data on trader sentiments from the [myfxbook](https://www.myfxbook.com/) and stores them in a mongodb 
 
 # config
-    Create the Config forder at the root directory create a file dev.js under the forder and insert the code below into the file dev.js
+Create a `config.env` file and insert the following codes into it.
 
-```javascript
-
-module.exports = {
-    DataBaseURI: "your mongodb uri",
-    Email: "your myfxbook email",
-    Password: "your myfxbook password",
-}
-
+```
+DATABASE = mongodb-uri
+DATABASE_PASSWORD = mongodb-password
+EMAIL = myfxbook email
+PASSWORD = myfxbook password
 ```
 
 ## npm install
@@ -21,6 +18,6 @@ module.exports = {
 
 ## npm start
 
-    Runs the app on `localhost:5100`
+    Runs the app on `localhost:8081`
 
 
