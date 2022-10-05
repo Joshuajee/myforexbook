@@ -3,7 +3,7 @@
 This webserver collects hourly data on trader sentiments from the [myfxbook](https://www.myfxbook.com/) and stores them in a mongodb 
 
 # config
-    Goto the Config forder create a file dev.js under the forder and insert the code below into the file dev.js
+    Create the Config forder at the root directory create a file dev.js under the forder and insert the code below into the file dev.js
 
 ```javascript
 
